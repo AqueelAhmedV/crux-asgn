@@ -6,7 +6,7 @@ import Chart, { Props } from 'react-apexcharts'
     showToolbar=false, 
     showGrid=false, 
     titleText="", 
-    chartHeight=240,
+    chartHeight='100%',
     recordsCount,
     barWidth
  }: BarChartProps) {

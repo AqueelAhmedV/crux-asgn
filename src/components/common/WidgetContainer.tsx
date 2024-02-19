@@ -8,16 +8,15 @@ import {
 import { WidgetContainerProps } from './commonTypes'
 
 export function WidgetContainer({ children, dimension }: WidgetContainerProps) {
-
     const dimensionClasses = {
-        smallSquare: ' w-48 h-48',
-        horizontal: ' w-96 h-48',
-        vertical: ' w-48 h-96',
-        bigSquare: ' w-96 h-96'
+        smallSquare: ' col-span-2 row-span-2  ',
+        horizontal: '   col-span-4 row-span-2 ',
+        vertical: '  col-span-2 row-span-4 ',
+        bigSquare: '  col-span-4 row-span-4 '
     }
 
     return (
-        <Card placeholder={''} className={"object-contain" + dimensionClasses[dimension]} >
+        <Card placeholder={''} className={"object-contain border" + dimensionClasses[dimension]} >
             <CardBody placeholder={''} className='p-0 '>
                 {children}
             </CardBody>
