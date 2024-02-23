@@ -1,49 +1,105 @@
-import { useState } from 'react'
 import './App.css'
-import { BarChart } from './components/charts/BarChart'
-import { LineChart } from './components/charts/LineChart'
-import { PieChart } from './components/charts/PieChart'
-import { WidgetContainer } from './components/common/WidgetContainer'
-import { WidgetTopbar } from './components/common/WidgetTopbar'
-import { DaysOptions } from './components/common/commonTypes'
+import { CreateWidgetModal } from './components/modal/Modal'
+import { WidgetContent } from './components/widget/WIdgetContent'
+import { WidgetBase } from './components/widget/WidgetBase'
+import { 
+  ChakraBaseProvider,
+  extendBaseTheme,
+  theme as chakraTheme,
+  useDisclosure,
+  Button
+} from '@chakra-ui/react'
+
+const { 
+  Button: Btn,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Modal,
+}:any = chakraTheme.components
+
+
+
+const theme = extendBaseTheme({
+  components: {
+    Btn,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    Tabs,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    IconButton,
+    Modal
+  },
+  colors: {
+    cruxia: '#5E5ADB'
+  }
+})
 
 function App() {
-  const [activeTab, setActiveTab] = useState<DaysOptions>(7);
-  return (
+  const { isOpen, onOpen, onClose } = useDisclosure({})
+   return (
     <>
-      <div className='grid grid-cols-12 grid-rows-12 grid-flow-dense gap-3  w-full'>
-      <WidgetContainer dimension='horizontal'>
-          <BarChart recordsCount={3} barWidth='60%' chartHeight='100%' />
-        </WidgetContainer>
-        <WidgetContainer dimension='bigSquare'>
-          <WidgetTopbar variant='dropdown' activeTab={activeTab} setActiveTab={setActiveTab}/>
-          <LineChart recordsCount={4} chartHeight=''/>
-        </WidgetContainer>
-        <WidgetContainer dimension='vertical'>
-          <PieChart chartDiameter={"100%"} />
-        </WidgetContainer>
-        <WidgetContainer dimension='smallSquare'>
-        <WidgetTopbar variant='tabs' activeTab={activeTab} setActiveTab={setActiveTab}/>
-          <PieChart chartDiameter={''} />
-        </WidgetContainer>
-        <WidgetContainer dimension='horizontal'>
-          <BarChart recordsCount={3} barWidth='60%' chartHeight='100%' />
-        </WidgetContainer>
+    <ChakraBaseProvider theme={theme}>
+    <div><Button onClick={onOpen}>Create Widget</Button></div>
+      <div><CreateWidgetModal isOpen={isOpen} onClose={onClose} /></div>
+      
+      <div className='sm:grid-cols-10 md:grid grid-cols-12 sm:grid-rows-10 md:grid-rows-12 grid-flow-dense gap-3  h-4/5'>
+      
+      <WidgetBase topbarVariant='dropdown' dimension='bigSquare'>
+      </WidgetBase>
+
+      <WidgetBase topbarVariant='dropdown' dimension='vertical'>
+          <WidgetContent type='chart' dataType='accounting' chartType='line' chartProps={{
+            chartHeight: '100%',
+            recordsCount: 4
+          }}/>
+        </WidgetBase>
+        <WidgetBase topbarVariant='dropdown' dimension='horizontal'>
+          <WidgetContent type='summary' dataType='accounting' />
+        </WidgetBase>
+        <WidgetBase topbarVariant='dropdown' dimension='smallSquare'>
+          <WidgetContent type='table' dataType='accounting' />
+        </WidgetBase>
+        {/* <WidgetBase topbarVariant='tabs' dimension='bigSquare'>
+          <WidgetContent />  
+        </WidgetBase>
+        <WidgetBase topbarVariant='dropdown' dimension='vertical'>
+          <WidgetContent/>
+        </WidgetBase>
+        <WidgetBase topbarVariant='tabs' dimension='smallSquare'>
+          <WidgetContent/>
+        </WidgetBase>
+        <WidgetBase topbarVariant='dropdown' dimension='horizontal'>
+          <WidgetContent/>  
+        </WidgetBase>
         
-        <WidgetContainer dimension='smallSquare'>
-          <PieChart chartDiameter={"100%"} />
-        </WidgetContainer>
+        <WidgetBase topbarVariant='tabs' dimension='smallSquare'>
+          <WidgetContent />
+        </WidgetBase>
         
-        <WidgetContainer dimension='smallSquare'>
-          <PieChart chartDiameter={"100%"} />
-        </WidgetContainer>
-        <WidgetContainer dimension='bigSquare'>
-          <PieChart chartDiameter={"100%"} />
-        </WidgetContainer>
-        <WidgetContainer dimension='horizontal'>
-          <BarChart recordsCount={3} barWidth='60%' chartHeight='100%' />
-        </WidgetContainer>
+        <WidgetBase dimension='smallSquare' topbarVariant='dropdown'>
+          <WidgetContent/>
+        </WidgetBase>
+        <WidgetBase dimension='bigSquare' topbarVariant='tabs'>
+          <WidgetContent/>
+        </WidgetBase>
+        <WidgetBase dimension='horizontal' topbarVariant='dropdown'>
+          <WidgetContent/>
+        </WidgetBase> */}
       </div>
+      </ChakraBaseProvider>
     </>
   )
 }

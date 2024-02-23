@@ -1,32 +1,21 @@
 import Chart, { Props } from 'react-apexcharts'
+import { ChartProps } from './chartsTypes';
   
     
-  export function BarChart({ 
+  export function BarChart<T extends 'bar'>({ 
     showLegend=false, 
     showToolbar=false, 
     showGrid=false, 
     titleText="", 
     chartHeight='100%',
-    recordsCount,
-    barWidth
- }: BarChartProps) {
+    // recordsCount,
+    barWidth,
+    chartData
+ }: Partial<ChartProps<T>>) {
     const chartConfig: Props = {
         type: "bar",
         height: chartHeight,
-        series: [
-            {
-                name: "Sales",
-                data: [50, 40, 300, 320, 500, 350, 200, 230, 500].slice(0, recordsCount ?? 9),
-            },
-            {
-                name: "Marketing",
-                data: [500, 210, 100, 620, 200, 350, 500, 430, 200].slice(0, recordsCount ?? 9),
-            },
-            {
-                name: "Accounting",
-                data: [10, 100, 200, 420, 500, 150, 500, 330, 400].slice(0, recordsCount ?? 9),
-            },
-        ],
+        series: chartData,
         options: {
           chart: {
             toolbar: {

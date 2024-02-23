@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+button[aria-selected=true] {
+    color: var(--chakra-colors-cruxia);
+}

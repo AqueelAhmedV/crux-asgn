@@ -1,20 +1,24 @@
-import { PropsWithChildren, SetStateAction } from "react";
+import { Attributes, Dispatch, FunctionComponent, PropsWithChildren, SetStateAction } from "react";
 
-interface WidgetContainerProps extends PropsWithChildren {
-    dimension: 'smallSquare' | 'horizontal' | 'vertical' | 'bigSquare'
-}
 
-type DaysOptions = 1 | 7 | 14 | 30
-
-interface WidgetTopbarProps {
-    variant: 'dropdown' | 'tabs',
-    activeTab: DaysOptions,
-    setActiveTab: React.Dispatch<SetStateAction<DaysOptions>>
-}
-
-interface WidgetTopbarDataItem {
+interface DropdownOption<T> {
     label: string,
-    value: DaysOptions
+    value: T
 }
 
-type WidgetTopbarData = WidgetTopbarDataItem[]
+interface DropdownTriggerProps extends Attributes {
+    options: Array<DropdownOption<any>>
+}
+interface DropdownProps<T> extends PropsWithChildren {
+    value: T;
+    setValue: Dispatch<SetStateAction<T>>;
+    options: Array<DropdownOption<T>>,
+    buttonEl?: FunctionComponent,
+    buttonElProps?: DropdownTriggerProps
+}
+
+interface TabSwitchProps<T> {
+    activeTab?: T;
+    setActiveTab: Dispatch<SetStateAction<T>>;
+    options: Array<DropdownOption<T>>   
+}

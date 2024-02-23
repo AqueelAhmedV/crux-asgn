@@ -1,31 +1,20 @@
-import Chart, { Props } from "react-apexcharts";
-
-export function LineChart({ 
+import Chart, { type Props } from "react-apexcharts";
+import type { ChartProps } from "./chartsTypes";
+export function LineChart<T extends 'line'>({ 
     showGrid=false, 
     showLegend=false, 
     showToolbar=false, 
     titleText="", 
     chartHeight='100%',
     chartWidth,
-    recordsCount }: LineChartProps) {
+    // recordsCount,
+    chartData
+}: Partial<ChartProps<T>>) {
     const chartConfig: Props = {
         type: "line",
         height: chartHeight,
         width: chartWidth,
-        series: [
-            {
-                name: "Sales",
-                data: [50, 40, 300, 320, 500, 350, 200, 230, 500].slice(0, recordsCount ?? 9),
-            },
-            {
-                name: "Marketing",
-                data: [500, 210, 100, 620, 200, 350, 500, 430, 200].slice(0, recordsCount ?? 9),
-            },
-            {
-                name: "Accounting",
-                data: [10, 100, 200, 420, 500, 150, 500, 330, 400].slice(0, recordsCount ?? 9),
-            },
-        ],
+        series: chartData,
         options: {
             chart: {
                 toolbar: {

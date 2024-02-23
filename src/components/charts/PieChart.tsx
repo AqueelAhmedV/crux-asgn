@@ -1,13 +1,14 @@
 
 import Chart, { Props } from "react-apexcharts";
+import { ChartProps } from "./chartsTypes";
 
 
-export function PieChart({ showLegend, showToolbar, titleText, chartDiameter=240 }: PieChartProps) {
+export function PieChart<T extends 'pie'>({ showLegend, showToolbar, titleText, chartDiameter=240, chartData }: Partial<ChartProps<T>>) {
     const chartConfig: Props = {
         type: "pie",
         width: chartDiameter,
         height: chartDiameter,
-        series: [44, 55, 13, 43, 22],
+        series: chartData,
         options: {
             chart: {
                 toolbar: {
