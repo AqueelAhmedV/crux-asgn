@@ -5,7 +5,6 @@ interface GenericChartProps {
     showLegend?: boolean,
     showToolbar?: boolean,
     titleText?: string,
-    bgColor: string,
 }
 
 type PieChartData = Array<number>;
@@ -48,8 +47,8 @@ interface PieChartProps extends GenericChartProps {
 type ChartProps<T> = (T extends 'pie' ? PieChartProps :
 T extends 'bar' ? BarChartProps: T extends 'line' ? LineChartProps: never);
 
-interface ChartComponentProps<T, K extends DataType> {
+interface ChartComponentProps<T extends ChartType> {
     chartType: T,
-    dataType: K,
     chartProps: Partial<ChartProps<T>>,
+    chartData: ChartData<T>
 }

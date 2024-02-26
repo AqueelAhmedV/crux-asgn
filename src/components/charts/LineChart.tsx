@@ -1,5 +1,6 @@
 import Chart, { type Props } from "react-apexcharts";
 import type { ChartProps } from "./chartsTypes";
+import { useWidgetTheme } from "../../contexts/widget/themeContext";
 export function LineChart<T extends 'line'>({ 
     showGrid=false, 
     showLegend=false, 
@@ -8,10 +9,17 @@ export function LineChart<T extends 'line'>({
     chartHeight='100%',
     chartWidth,
     // recordsCount,
-    chartData
+    chartData,
+    // bgColor
 }: Partial<ChartProps<T>>) {
+
+    const { widgetTheme } = useWidgetTheme()
     const chartConfig: Props = {
         type: "line",
+        // style: {
+        //     backgroundColor: bgColor,
+        //     borderRadius: '3px'
+        // },
         height: chartHeight,
         width: chartWidth,
         series: chartData,
@@ -44,7 +52,7 @@ export function LineChart<T extends 'line'>({
                 },
                 labels: {
                     style: {
-                        colors: "#616161",
+                        colors: widgetTheme.content.color,
                         fontSize: "12px",
                         fontFamily: "inherit",
                         fontWeight: 400,
@@ -65,10 +73,14 @@ export function LineChart<T extends 'line'>({
             yaxis: {
                 labels: {
                     style: {
-                        colors: "#616161",
+                        colors: widgetTheme.content.color,
                         fontSize: "12px",
                         fontFamily: "inherit",
                         fontWeight: 400,
+                    },
+                    formatter(val, _opts) {
+                        if (val / 1000 >= 1) val /= 1000;
+                        return val+'k' 
                     },
                 },
             },
@@ -99,6 +111,6 @@ export function LineChart<T extends 'line'>({
         
     };
     return (
-        <Chart  {...chartConfig} />
+        <Chart {...chartConfig} />
     );
 }

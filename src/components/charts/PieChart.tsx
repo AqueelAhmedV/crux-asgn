@@ -1,11 +1,16 @@
 
 import Chart, { Props } from "react-apexcharts";
 import { ChartProps } from "./chartsTypes";
+// import { useWidgetTheme } from "../../contexts/widget/themeContext";
 
 
 export function PieChart<T extends 'pie'>({ showLegend, showToolbar, titleText, chartDiameter=240, chartData }: Partial<ChartProps<T>>) {
+    // const { widgetTheme } = useWidgetTheme()
     const chartConfig: Props = {
         type: "pie",
+        // style: {
+        //     color: widgetTheme.content.color,
+        // },
         width: chartDiameter,
         height: chartDiameter,
         series: chartData,

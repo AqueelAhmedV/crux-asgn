@@ -1,17 +1,13 @@
 import './App.css'
-import { CreateWidgetModal } from './components/modal/Modal'
-import { WidgetContent } from './components/widget/WIdgetContent'
-import { WidgetBase } from './components/widget/WidgetBase'
 import { 
   ChakraBaseProvider,
   extendBaseTheme,
   theme as chakraTheme,
-  useDisclosure,
-  Button
 } from '@chakra-ui/react'
+import { Landing } from './pages/Landing'
 
 const { 
-  Button: Btn,
+  Button,
   Tabs,
   TabList,
   Tab,
@@ -23,13 +19,15 @@ const {
   MenuList,
   MenuItem,
   Modal,
+  CloseButton,
+  Circle
 }:any = chakraTheme.components
 
 
 
 const theme = extendBaseTheme({
   components: {
-    Btn,
+    Button,
     Tab,
     TabList,
     TabPanel,
@@ -40,67 +38,32 @@ const theme = extendBaseTheme({
     MenuItem,
     MenuList,
     IconButton,
-    Modal
+    Modal,
+    CloseButton,
+    Circle
   },
   colors: {
-    cruxia: '#5E5ADB'
+    cruxia: {
+      50: '#E6E9FF', 
+      100: '#CECFFF', 
+      200: '#B3B9FF', 
+      300: '#99A2FF', 
+      400: '#5E5ADB', 
+      500: '#7471E5', // Moved from 400, then +50
+      600: '#8A7FEF', // #7471E5 + 50
+      700: '#A088F8', // #7471E5 + 100
+      800: '#B19FFF', // #7471E5 + 150
+      900: '#BDAAFF', // #7471E5 + 200
+  }
+  
   }
 })
 
 function App() {
-  const { isOpen, onOpen, onClose } = useDisclosure({})
-   return (
-    <>
+  return (
     <ChakraBaseProvider theme={theme}>
-    <div><Button onClick={onOpen}>Create Widget</Button></div>
-      <div><CreateWidgetModal isOpen={isOpen} onClose={onClose} /></div>
-      
-      <div className='sm:grid-cols-10 md:grid grid-cols-12 sm:grid-rows-10 md:grid-rows-12 grid-flow-dense gap-3  h-4/5'>
-      
-      <WidgetBase topbarVariant='dropdown' dimension='bigSquare'>
-      </WidgetBase>
-
-      <WidgetBase topbarVariant='dropdown' dimension='vertical'>
-          <WidgetContent type='chart' dataType='accounting' chartType='line' chartProps={{
-            chartHeight: '100%',
-            recordsCount: 4
-          }}/>
-        </WidgetBase>
-        <WidgetBase topbarVariant='dropdown' dimension='horizontal'>
-          <WidgetContent type='summary' dataType='accounting' />
-        </WidgetBase>
-        <WidgetBase topbarVariant='dropdown' dimension='smallSquare'>
-          <WidgetContent type='table' dataType='accounting' />
-        </WidgetBase>
-        {/* <WidgetBase topbarVariant='tabs' dimension='bigSquare'>
-          <WidgetContent />  
-        </WidgetBase>
-        <WidgetBase topbarVariant='dropdown' dimension='vertical'>
-          <WidgetContent/>
-        </WidgetBase>
-        <WidgetBase topbarVariant='tabs' dimension='smallSquare'>
-          <WidgetContent/>
-        </WidgetBase>
-        <WidgetBase topbarVariant='dropdown' dimension='horizontal'>
-          <WidgetContent/>  
-        </WidgetBase>
-        
-        <WidgetBase topbarVariant='tabs' dimension='smallSquare'>
-          <WidgetContent />
-        </WidgetBase>
-        
-        <WidgetBase dimension='smallSquare' topbarVariant='dropdown'>
-          <WidgetContent/>
-        </WidgetBase>
-        <WidgetBase dimension='bigSquare' topbarVariant='tabs'>
-          <WidgetContent/>
-        </WidgetBase>
-        <WidgetBase dimension='horizontal' topbarVariant='dropdown'>
-          <WidgetContent/>
-        </WidgetBase> */}
-      </div>
-      </ChakraBaseProvider>
-    </>
+      <Landing/>
+    </ChakraBaseProvider> 
   )
 }
 

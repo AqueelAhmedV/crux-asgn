@@ -3,44 +3,44 @@ export const CRUXIA_REGULAR = '#5E5ADB'
 export const widgetTheme = {
     light: {
         topbar: {
-            color: '#777',
+            color: '#999',
             focus: CRUXIA_REGULAR,
-            lines: '#888',
+            lines: '#bbb',
             bg: '#fff',
         },
         content: {
-            color: '#777',
-            focus: CRUXIA_REGULAR,
+            color: '#999',
+            focus: '#666',
             bg: '#fff',
-            lines: '#777'
+            lines: 'transparent'
         },
     },
     dark: {
         topbar: {
-            color: '',
-            lines: '',
-            bg: '',
-            focus: ''
+            color: '#aaa',
+            lines: '#bbb',
+            bg: '#282828',
+            focus: '#ddd'
         },
         content: {
-            color: '',
-            bg: '',
-            lines: '',
-            focus: ''
+            color: '#aaa',
+            bg: '#282828',
+            lines: '#bbb',
+            focus: '#ddd'
         },
     },
     inverted: {
         topbar: {
-            color: '',
-            lines: '',
-            bg: '',
-            focus: ''
+            color: '#ccc',
+            lines: '#eee',
+            bg: CRUXIA_REGULAR,
+            focus: '#eee'
         },
         content: {
-            color: '',
-            bg: '',
-            lines: '',
-            focus: ''
+            color: '#ccc',
+            lines: 'rgba(255,255,255,0.4)',
+            bg: CRUXIA_REGULAR,
+            focus: '#eee'
         },
     }
 }

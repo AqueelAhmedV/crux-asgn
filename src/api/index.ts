@@ -8,15 +8,28 @@ async function sleep(s: number) {
     })
 }
 
-import { data } from "../db/data";
+import { data, summary } from "../db/data";
+import { SummaryResponse } from "../components/summary/summaryTypes";
 
-export async function getData(setLoading: React.Dispatch<React.SetStateAction<boolean>>): Promise<Data> {
-    setLoading(true)
+export async function getData(setLoading?: React.Dispatch<React.SetStateAction<boolean>>): Promise<Data> {
+    setLoading && setLoading(true)
     await sleep(0.2)
     try {
         await sleep(0.1)
-        setLoading(false)
+        setLoading && setLoading(false)
         return data
+    } catch (err) {
+        throw { err }
+    }
+}
+
+export async function getSummary(setLoading?: React.Dispatch<React.SetStateAction<boolean>>): Promise<SummaryResponse> {
+    setLoading && setLoading(true)
+    await sleep(0.2)
+    try {
+        await sleep(0.1)
+        setLoading && setLoading(false)
+        return summary
     } catch (err) {
         throw { err }
     }

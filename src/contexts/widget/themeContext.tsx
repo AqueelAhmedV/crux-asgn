@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, createContext, useContext, useState } from 'react';
+import React, { type PropsWithChildren, createContext, useContext, useState } from 'react';
 
 
 import { WidgetTheme, WidgetThemeConfig, widgetTheme } from '../../theme/widget';

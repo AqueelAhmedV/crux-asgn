@@ -2,7 +2,7 @@ import { Attributes, Dispatch, FunctionComponent, PropsWithChildren, SetStateAct
 
 
 interface DropdownOption<T> {
-    label: string,
+    label: string | JSX.Element,
     value: T
 }
 
@@ -11,7 +11,7 @@ interface DropdownTriggerProps extends Attributes {
 }
 interface DropdownProps<T> extends PropsWithChildren {
     value: T;
-    setValue: Dispatch<SetStateAction<T>>;
+    setValue: Dispatch<SetStateAction<T>> | ((val:T) => void);
     options: Array<DropdownOption<T>>,
     buttonEl?: FunctionComponent,
     buttonElProps?: DropdownTriggerProps

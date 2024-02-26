@@ -1,34 +1,112 @@
-import React, { PropsWithChildren, createContext, useContext, useState } from 'react';
-import type { WidgetDimension, WidgetType } from '../../components/widget/widgetsTypes';
-import type { DataType } from '../../db/dataType';
-import type { ChartType } from '../../components/charts/chartsTypes';
-import { WidgetTheme } from '../../theme/widget';
+import React, { type PropsWithChildren, createContext, useContext, useState } from 'react';
+import { WidgetConfig } from '../../components/widget/widgetsTypes';
 
 
-// Define the widget configuration interface
-interface WidgetConfig {
-  dimension: WidgetDimension,
-  type: WidgetType;
-  dataType: DataType;
-  chartType?: ChartType; // Only applicable if the widget type is 'chart'
-  theme: WidgetTheme;
-  widgetId: string
-}
 
 // Define the context type
 interface DashboardContextType {
-  widgetsConfig: {
-    [widgetId: string]: WidgetConfig;
-  };
+  widgetsConfig: Record<WidgetConfig['widgetId'], WidgetConfig>
   addWidget: (widgetId: string, config: WidgetConfig) => void;
   removeWidget: (widgetId: string) => void;
+  defaultWidgetConfig: WidgetConfig
+}
+
+const defaultWidgetConfig: WidgetConfig = {
+  widgetId: Date.now().toString(),
+  theme: 'light',
+  topbarVariant: 'dropdown',
+  dataType: 'accounting',
+  type: 'chart',
+  chartType: 'line',
+  chartProps: { recordsCount: 4, chartWidth: '100%' },
+  dimension: 'smallSquare'
+}
+
+const startupWidgets: Record<WidgetConfig['widgetId'], WidgetConfig> = {
+  '1234': {
+    widgetId: '1234',
+    type: 'table',
+    theme: 'inverted',
+    dimension: 'smallSquare',
+    topbarVariant: 'dropdown',
+    dataType: 'accounting'
+  },
+  '1358': {
+    widgetId: '1358',
+    type: 'chart',
+    theme: 'light',
+    dimension: 'bigSquare',
+    topbarVariant: 'tabs',
+    dataType: 'accounting',
+    chartType: 'bar',
+    chartProps: {
+      barWidth: '60%',
+      chartHeight: '100%',
+      recordsCount: 2
+    }
+  },
+  '2468': {
+    widgetId: '2468',
+    type: 'summary',
+    theme: 'light',
+    dimension: 'horizontal',
+    topbarVariant: 'dropdown',
+    dataType: 'accounting',
+  },
+  '9876': {
+    widgetId: '9876',
+    type: 'chart',
+    theme: 'dark',
+    dimension: 'vertical',
+    topbarVariant: 'tabs',
+    dataType: 'accounting',
+    chartType: 'pie',
+    chartProps: {
+      chartDiameter: '100%'
+    }
+  },
+  '0987': {
+    widgetId: '0987',
+    type: 'summary',
+    theme: 'inverted',
+    dimension: 'horizontal',
+    topbarVariant: 'dropdown',
+    dataType: 'accounting',
+  },
+  '1100': {
+    widgetId: '1100',
+    type: 'chart',
+    theme: 'inverted',
+    dimension: 'bigSquare',
+    topbarVariant: 'tabs',
+    dataType: 'sales',
+    chartType: 'line',
+    chartProps: {
+      chartWidth: '100%',
+      recordsCount: 4
+    }
+  },
+  '2200': {
+    widgetId: '2200',
+    type: 'chart',
+    theme: 'light',
+    dimension: 'smallSquare',
+    topbarVariant: 'tabs',
+    dataType: 'marketing',
+    chartType: 'line',
+    chartProps: {
+      chartWidth: '100%',
+      recordsCount: 4
+    }
+  }
 }
 
 // Create the context
 const DashboardContext = createContext<DashboardContextType>({
-  widgetsConfig: {},
-  addWidget: () => {},
-  removeWidget: () => {},
+  widgetsConfig: startupWidgets,
+  addWidget: () => { },
+  removeWidget: () => { },
+  defaultWidgetConfig
 });
 
 // Create the provider
@@ -50,8 +128,9 @@ export const DashboardProvider: React.FC<PropsWithChildren> = ({ children }) => 
     });
   };
 
+
   return (
-    <DashboardContext.Provider value={{ widgetsConfig, addWidget, removeWidget }}>
+    <DashboardContext.Provider value={{ widgetsConfig, addWidget, removeWidget, defaultWidgetConfig }}>
       {children}
     </DashboardContext.Provider>
   );

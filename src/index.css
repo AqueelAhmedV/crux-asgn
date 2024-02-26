@@ -1,7 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
+
 button[aria-selected=true] {
     color: var(--chakra-colors-cruxia);
+}
+
+* {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
 }

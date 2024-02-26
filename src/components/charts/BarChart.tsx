@@ -1,5 +1,6 @@
 import Chart, { Props } from 'react-apexcharts'
 import { ChartProps } from './chartsTypes';
+import { useWidgetTheme } from '../../contexts/widget/themeContext';
   
     
   export function BarChart<T extends 'bar'>({ 
@@ -12,6 +13,8 @@ import { ChartProps } from './chartsTypes';
     barWidth,
     chartData
  }: Partial<ChartProps<T>>) {
+
+    const { widgetTheme } = useWidgetTheme()
     const chartConfig: Props = {
         type: "bar",
         height: chartHeight,
@@ -44,7 +47,7 @@ import { ChartProps } from './chartsTypes';
             },
             labels: {
               style: {
-                colors: "#616161",
+                colors: widgetTheme.content.color,
                 fontSize: "12px",
                 fontFamily: "inherit",
                 fontWeight: 400,
@@ -59,11 +62,15 @@ import { ChartProps } from './chartsTypes';
           yaxis: {
             labels: {
               style: {
-                colors: "#616161",
+                colors: widgetTheme.content.color,
                 fontSize: "12px",
                 fontFamily: "inherit",
                 fontWeight: 400,
               },
+              formatter(val, _opts) {
+                if (val / 1000 >= 1) val /= 1000;
+                return val+'k' 
+            },
             },
           },
           grid: {

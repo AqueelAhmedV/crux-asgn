@@ -2,28 +2,26 @@ import { DaysOptions, WidgetBaseProps } from './widgetsTypes'
 import { WidgetTopbar } from './WidgetTopbar'
 import { useState } from 'react'
 import { WidgetThemeProvider } from '../../contexts/widget/themeContext'
+import { WidgetContainer } from './WidgetContainer';
+import { WidgetContent } from './WidgetContent';
 
 
-export function WidgetBase({ children, dimension, topbarVariant }: WidgetBaseProps) {
-    const dimensionClasses = {
-        smallSquare: ' col-span-2 row-span-2  ',
-        horizontal: '   col-span-4 row-span-2 ',
-        vertical: '  col-span-2 row-span-4 ',
-        bigSquare: '  col-span-4 row-span-4 '
-    }
+export function WidgetBase({ widgetConfig }: WidgetBaseProps) {
 
     const [activeTab, setActiveTab] = useState<DaysOptions>(7);
 
     return (
         <WidgetThemeProvider>
-        <div 
-        className={"object-contain border rounded-lg shadow-md oveflow-hidden" + dimensionClasses[dimension]} >
-            
-            <WidgetTopbar activeTab={activeTab} setActiveTab={setActiveTab} variant={topbarVariant}></WidgetTopbar>
-            <div className='p-0 flex justify-center items-center' >
-                {children}
-            </div>
-        </div>
+            <WidgetContainer dimension={widgetConfig.dimension} theme={widgetConfig.theme}>
+                <WidgetTopbar variant={widgetConfig.topbarVariant} activeTab={activeTab} setActiveTab={setActiveTab} />
+                {/* <span className='text-red-500'>{widgetConfig.dimension}</span> */}
+                <WidgetContent 
+                    type={widgetConfig.type}
+                    dataType={widgetConfig.dataType}
+                    chartType={widgetConfig?.chartType}
+                    chartProps={widgetConfig?.chartProps}
+                />
+            </WidgetContainer>
         </WidgetThemeProvider>
     )
 }

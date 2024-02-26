@@ -27,18 +27,19 @@ export function Dropdown<T>({ value, setValue, options, buttonEl, buttonElProps 
 
     return (
             <Menu>
-                {buttonEl && React.createElement(buttonEl, {...buttonElProps })}
+                {buttonEl && React.createElement(buttonEl, {...buttonElProps, })}
                 {!buttonEl && <MenuTrigger />}
-                <MenuList color={widgetTheme.topbar.color}>
+                <MenuList bgColor={widgetTheme.topbar.bg}  color={widgetTheme.topbar.color}>
                     {
                         options.map(({ label, value }) => (
                             <MenuItem 
-                            key={label}
+                            bgColor={widgetTheme.topbar.bg}
+                            key={value+''}
                             _active={{
                                 color: widgetTheme.topbar.focus,
                             }}
                             _hover={{
-                                color: widgetTheme.topbar.focus 
+                                color: widgetTheme.topbar.focus,
                             }}
                             onClick={(_e) => setValue(value)} value={value+''}>{label}</MenuItem>
                         ))
