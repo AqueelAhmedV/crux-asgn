@@ -8,8 +8,8 @@ import { deserializer } from "../../utils/deserializers";
 import React, { Suspense, useMemo } from "react";
 import { getData, getSummary } from "../../api";
 import { SummaryProps } from "../summary/summaryTypes";
-import { Data } from "../../db/dataType";
 import { Skeleton } from "@chakra-ui/react";
+import { DataTableRows } from "../table/tableTypes";
 
 
 export function WidgetContent<T extends WidgetType, K extends ChartType>({ type, chartType, dataType, chartProps }: WidgetContentProps<T, K>) {
@@ -18,7 +18,7 @@ export function WidgetContent<T extends WidgetType, K extends ChartType>({ type,
     
     const LzMzContent = useMemo(() => {
         return React.lazy(async () => {
-            let summaryProps: SummaryProps, chartData: ChartData<K>;
+            let summaryProps: SummaryProps, chartData: ChartData<K>, tableData: DataTableRows;
             const widgetLookup: Record<WidgetType, JSX.Element> = {
                 summary: <></>,
                 chart: <></>,
@@ -32,6 +32,10 @@ export function WidgetContent<T extends WidgetType, K extends ChartType>({ type,
                 chartData = await getData().then(
                     (dataRes) => deserializer.chart(chartType as K, dataRes, dataType)) as ChartData<K>
                 widgetLookup.chart = <Chart chartType={chartType as K} chartData={chartData} chartProps={chartProps as ChartProps<K>}/>
+            } else {
+                tableData = await getData().then(
+                    (dataRes) => deserializer.table(dataType, dataRes))
+                widgetLookup.table = <DataTable dataType={dataType} tableRows={tableData}/>
             }
             
 
@@ -49,7 +53,7 @@ export function WidgetContent<T extends WidgetType, K extends ChartType>({ type,
 
     return (
     <div className=' p-1 flex justify-center items-center' >
-        <Suspense fallback={<Skeleton width={'300px'} height={'100%'}/>}>
+        <Suspense fallback={<Skeleton fitContent />}>
             <LzMzContent/>
         </Suspense>
     </div>)

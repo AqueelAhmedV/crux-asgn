@@ -1,6 +1,6 @@
 
 import { DropdownProps } from "./commonTypes"
-import { useWidgetTheme } from "../../contexts/widget/themeContext"
+import { useWidgetContext } from "../../contexts/widget/themeContext"
 
 import {
     Menu,
@@ -12,7 +12,7 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline"
 import React from "react"
 
 export function Dropdown<T>({ value, setValue, options, buttonEl, buttonElProps }: DropdownProps<T>) {
-    const { widgetTheme } = useWidgetTheme()
+    const { widgetTheme } = useWidgetContext()
 
     function MenuTrigger() {
 

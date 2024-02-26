@@ -1,15 +1,16 @@
 import { useEffect } from "react"
-import { useWidgetTheme } from "../../contexts/widget/themeContext"
+import { useWidgetContext } from "../../contexts/widget/themeContext"
 import { WidgetContainerProps } from "./widgetsTypes"
 
 
-export function WidgetContainer({ children, dimension, theme }: WidgetContainerProps) {
-    const { setWidgetTheme, widgetTheme } = useWidgetTheme()
+export function WidgetContainer({ children, dimension, widgetConfig }: WidgetContainerProps) {
+    const { setWidgetConfig, setWidgetTheme, widgetTheme } = useWidgetContext()
 
-    // temporary
     useEffect(() => {
-        setWidgetTheme(theme)
-    }, [theme])
+        setWidgetConfig(widgetConfig)
+        setWidgetTheme(widgetConfig.theme)
+    }, [widgetConfig])
+
 
     const dimensionClasses = {
         smallSquare: ' col-span-2 row-span-2  ',

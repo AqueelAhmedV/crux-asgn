@@ -10,9 +10,10 @@ export function WidgetBase({ widgetConfig }: WidgetBaseProps) {
 
     const [activeTab, setActiveTab] = useState<DaysOptions>(7);
 
+
     return (
         <WidgetThemeProvider>
-            <WidgetContainer dimension={widgetConfig.dimension} theme={widgetConfig.theme}>
+            <WidgetContainer widgetConfig={widgetConfig} dimension={widgetConfig.dimension}>
                 <WidgetTopbar variant={widgetConfig.topbarVariant} activeTab={activeTab} setActiveTab={setActiveTab} />
                 {/* <span className='text-red-500'>{widgetConfig.dimension}</span> */}
                 <WidgetContent 

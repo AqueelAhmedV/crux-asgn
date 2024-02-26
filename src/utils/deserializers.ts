@@ -1,5 +1,6 @@
 import { ChartData, ChartType } from "../components/charts/chartsTypes"
 import { SummaryProps, SummaryResponse } from "../components/summary/summaryTypes"
+import { DataTableRows } from "../components/table/tableTypes"
 import { Data, DataType } from "../db/dataType"
 
 
@@ -17,7 +18,7 @@ export const deserializer = {
                 data: seriesLookup[c]()
             })) as ChartData<T>
         } else if (chartType === 'pie') {
-            return Object.values(data[dataType]) as ChartData<T>
+            return seriesLookup[dataType]() as ChartData<T>
         } else {
             return [{
                 name: dataType.charAt(0).toUpperCase() + dataType.slice(1),
@@ -32,7 +33,12 @@ export const deserializer = {
             highlights: data[dataType].highlighted.map((o) => [o.start, o.end])
         })
     },
-    table<T extends DataType>(dataType: T, data: any) {
-        data + dataType
+    table<T extends DataType>(dataType: T, data: Data): DataTableRows {
+        let seriesLookup = {
+            accounting: () => Object.entries(data['accounting']).map((a) => ({ label: a[0], value: a[1]  })),
+            marketing: () => data['marketing']['campaigns'].map((c) => ({ label: c.name, value: c.cost })),
+            sales: () => data['sales']['top_products'].map((s) => ({ label: s.name, value: s.sales }))
+        }
+        return seriesLookup[dataType]()
     }
 }

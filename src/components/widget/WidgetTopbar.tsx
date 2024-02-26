@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { type WidgetTopbarData, type WidgetTopbarProps } from "./widgetsTypes";
 
 import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline'
@@ -7,11 +7,12 @@ import { Dropdown } from "../common/Dropdown";
 import {
     // TabPanel,
     // TabPanels,
-    IconButton,
+    IconButton, IconButtonProps, Menu, MenuButton, MenuItem, MenuList, 
 
 } from '@chakra-ui/react'
 import { TabSwitch } from "../common/TabSwitch";
-import { useWidgetTheme } from "../../contexts/widget/themeContext";
+import { useWidgetContext } from "../../contexts/widget/themeContext";
+import { useDashboard } from "../../contexts/dashboard";
 
 
 export function WidgetTopbar({ variant, activeTab, setActiveTab }: WidgetTopbarProps) {
@@ -45,12 +46,11 @@ export function WidgetTopbar({ variant, activeTab, setActiveTab }: WidgetTopbarP
         return tabHeaderLookup[variant]
     }, [variant, data, activeTab, setActiveTab])
 
+    const { widgetTheme, widgetConfig } = useWidgetContext()
     
-    function MoreButton({  }) {
-
-        const { widgetTheme } = useWidgetTheme()
-
+    function MoreButton(props: React.Attributes & Partial<IconButtonProps>) {
         return <IconButton
+            {...props}
             isRound
             aria-label="more_button"
             _hover={{ bg: "transparent" }}
@@ -59,6 +59,19 @@ export function WidgetTopbar({ variant, activeTab, setActiveTab }: WidgetTopbarP
         </IconButton>
     }
 
+    const { removeWidget } = useDashboard() 
+
+    const options = useMemo(() => [
+        {label: 'Delete', action: () => {
+            console.log('DELETE', widgetConfig.widgetId, widgetConfig); 
+            widgetConfig.widgetId && removeWidget(widgetConfig.widgetId)
+        }}
+    ], [widgetConfig])
+
+    // function MenuTrigger() {
+    //     return    _active: { color: 'cruxia.400' }
+    //     })
+    // }
 
     return (
 
@@ -68,13 +81,25 @@ export function WidgetTopbar({ variant, activeTab, setActiveTab }: WidgetTopbarP
                 {TabHeaderContent}
             </div>
             <div>
-                <Dropdown value={''} setValue={() => { }} buttonEl={MoreButton} buttonElProps={{
-                    options: [
-                        { label: 'Delete', value: 'delete' }
-                    ]
-                }} options={[
-                    { label: 'Delete', value: 'delete' }
-                ]} />
+            <Menu preventOverflow>
+                <MoreButton as={MenuButton}/>
+                <MenuList bgColor={widgetTheme.topbar.bg}  color={widgetTheme.topbar.color}>
+                    {
+                        options.map(({ label, action }) => (
+                            <MenuItem 
+                            bgColor={widgetTheme.topbar.bg}
+                            key={label}
+                            _active={{
+                                color: widgetTheme.topbar.focus,
+                            }}
+                            _hover={{
+                                color: widgetTheme.topbar.focus,
+                            }}
+                            onClick={action}>{label}</MenuItem>
+                        ))
+                    }
+                </MenuList>
+            </Menu>
             </div>
         </div>
 

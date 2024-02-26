@@ -9,12 +9,9 @@ import {
     Stack,
     IconButton,
     Square,
-    Box,
-    Circle,
 } from '@chakra-ui/react'
 
 import { RepeatClockIcon } from '@chakra-ui/icons'
-import { useEffect, useState } from 'react'
 import { useDashboard } from '../../contexts/dashboard'
 import { WidgetBase } from '../widget/WidgetBase'
 import { ChartBarIcon, PresentationChartLineIcon } from '@heroicons/react/24/outline'
@@ -23,23 +20,20 @@ import { ChartType } from '../charts/chartsTypes'
 import useWidgetConfig from '../../utils/reducers'
 import { WidgetType } from '../widget/widgetsTypes'
 import { Dropdown } from '../common/Dropdown'
+import { WidgetTheme } from '../../theme/widget'
 
 export function CreateWidgetModal({ onClose, isOpen }: CreateWidgetModalProps) {
-    const { addWidget, defaultWidgetConfig } = useDashboard()
+    const { addWidget } = useDashboard()
     const {
         widgetConfig,
         setWidgetType,
-        setChartProps,
+        // setChartProps,
         setDataType,
         setDimension,
         setTheme,
         setTopbarVariant,
-        setChartType
+        setChartType,
     } = useWidgetConfig()
-
-    useEffect(() => {
-        console.log(widgetConfig)
-    }, [widgetConfig])
 
 
     function handleWidgetTypeSelect(e: React.MouseEvent<HTMLDivElement, MouseEvent>, manual?:WidgetType) {
@@ -55,9 +49,17 @@ export function CreateWidgetModal({ onClose, isOpen }: CreateWidgetModalProps) {
         handleWidgetTypeSelect(e, 'chart')
     }
 
+    function handleThemeChange(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+        let widgetTheme = (e.target as HTMLButtonElement).getAttribute('aria-label') as WidgetTheme
+        setTheme(widgetTheme)
+    }
+
 
     function handleSaveWidget() {
-        addWidget(Date.now().toString(), widgetConfig)
+        let newWidgetId = Date.now().toString()
+        let newConfig = { ...widgetConfig }
+        newConfig.widgetId = newWidgetId
+        addWidget(newWidgetId, newConfig)
         onClose()
     }
 
@@ -65,18 +67,40 @@ export function CreateWidgetModal({ onClose, isOpen }: CreateWidgetModalProps) {
         return (
             <div className='absolute inset-0 w-full h-full z-[999] p-2 pointer-events-none'>
                 <div className='flex flex-col justify-between h-full'>
-                <div className='flex w-full pointer-events-auto'>
+                <div className='flex justify-between w-full pointer-events-auto'>
                 <Dropdown value={widgetConfig.dimension} setValue={setDimension} options={[
                     {label: '1x1', value: 'smallSquare'},
-                    {label: '1x2', value: 'horizontal'},
-                    {label: '2x1', value: 'vertical'},
+                    {label: '1x2', value: 'vertical'},
+                    {label: '2x1', value: 'horizontal'},
                     {label: '2x2', value: 'bigSquare'}
                 ]} />
+                <Dropdown value={widgetConfig.topbarVariant} setValue={setTopbarVariant} options={[
+                    {label: 'Tabs', value: 'tabs'},
+                    {label: 'Dropdown', value: 'dropdown'},
+                ]} />
                 </div>
-                <div className='border z-[999] flex w-full items-center justify-center gap-2'>
-                    <Circle size={10} aria-label='white' color={'cruxia.400'}/>
-                    <Circle size={10} aria-label='inverted' color={'white'}/>
-                    <Circle size={10} aria-label='dark' color={'black'} _focus={{ ring: 2, ringColor: 'cruxia.200' }}/>
+                <div className='border flex w-full items-center justify-center gap-2'>
+                    <div
+                    tabIndex={0}
+                    onClick={handleThemeChange}
+                    className={`size-6 cursor-pointer rounded-full 
+                    pointer-events-auto bg-white focus:ring-1 ring-cruxia
+                     ring-offset-slate-300 focus:ring-offset-2`}
+                    aria-label='light'/>
+                    <div
+                    tabIndex={0}
+                    onClick={handleThemeChange}
+                    className={`size-6 cursor-pointer rounded-full 
+                    pointer-events-auto bg-cruxia focus:ring-1 ring-cruxia 
+                    ring-offset-slate-300 focus:ring-offset-2`}
+                    aria-label='inverted'/>
+                    <div
+                    tabIndex={0} 
+                    onClick={handleThemeChange}
+                    className={`size-6 cursor-pointer rounded-full 
+                    pointer-events-auto bg-black focus:ring-1 ring-cruxia 
+                    ring-offset-slate-300 focus:ring-offset-2`}
+                    aria-label='dark' />
                 </div>
                 </div>
             </div>
@@ -101,8 +125,8 @@ export function CreateWidgetModal({ onClose, isOpen }: CreateWidgetModalProps) {
                     </div>
                     <hr color='gray' />
                     <ModalBody overflow={'auto'}>
-                        <div className="grid grid-cols-4 gap-4">
-                            <div className="relative grid place-items-center grid-cols-10 col-span-3 border rounded bg-slate-200">
+                        <div className="grid grid-cols-3 gap-4">
+                            <div className="relative flex justify-center items-center col-span-2 border rounded bg-slate-200">
                                 <PlaygroundOverlay />
                                 {<WidgetBase widgetConfig={widgetConfig} />}
                             </div>
@@ -113,7 +137,7 @@ export function CreateWidgetModal({ onClose, isOpen }: CreateWidgetModalProps) {
                                             <div
                                                 onClick={handleWidgetTypeSelect}
                                                 aria-label='table'
-                                                tabIndex={0} className='pointer-events-auto p-4 focus:ring-2 focus:ring-cruxia rounded-lg shadow-md '>
+                                                tabIndex={0} className='border pointer-events-auto p-4 focus:ring-2 focus:ring-cruxia rounded-lg shadow-sm '>
                                                 <span className=' pointer-events-none text-md block font-medium text-gray-800'>
                                                     Data
                                                 </span>
@@ -124,7 +148,7 @@ export function CreateWidgetModal({ onClose, isOpen }: CreateWidgetModalProps) {
                                             <div
                                                 onClick={handleWidgetTypeSelect}
                                                 aria-label='chart'
-                                                tabIndex={0} className=' pointer-events-auto focus:ring-2 focus-within:ring-2 ring-cruxia rounded-lg shadow-md p-4'>
+                                                tabIndex={0} className='border pointer-events-auto focus:ring-2 focus-within:ring-2 ring-cruxia rounded-lg shadow-sm p-4'>
                                                 <span className='pointer-events-none text-md block font-medium text-gray-800'>
                                                     Graph
                                                 </span>
@@ -158,7 +182,7 @@ export function CreateWidgetModal({ onClose, isOpen }: CreateWidgetModalProps) {
                                             <div 
                                             onClick={handleWidgetTypeSelect}
                                             aria-label='summary' 
-                                            tabIndex={0} className=' pointer-events-auto p-4 focus:ring-2 focus:ring-cruxia rounded-lg shadow-md '>
+                                            tabIndex={0} className='border pointer-events-auto p-4 focus:ring-2 focus:ring-cruxia rounded-lg shadow-sm '>
                                                 <span className=' pointer-events-none text-md block font-medium text-gray-800'>
                                                     Summary
                                                 </span>
@@ -168,14 +192,14 @@ export function CreateWidgetModal({ onClose, isOpen }: CreateWidgetModalProps) {
                                             </div>
                                         </Stack>
                                     </div>
-                                    <Stack direction={'row'} spacing={3} justify={'space-around'}>
-                                        <IconButton aria-label='history' variant={'outline'} color='gray' colorScheme='gray'>
+                                    <Stack direction={'row'} spacing={2} justify={'space-around'}>
+                                        <IconButton padding={5} aria-label='history' variant={'outline'} color='gray' colorScheme='gray'>
                                             <RepeatClockIcon className='size-7' />
                                         </IconButton>
-                                        <Button fontWeight={500} color='gray' colorScheme='gray' variant={'outline'}
+                                        <Button padding={5} fontWeight={500} color='gray' colorScheme='gray' variant={'outline'}
                                             onClick={onClose}>
                                             Back</Button>
-                                        <Button fontWeight={500} colorScheme='cruxia' variant={'solid'}
+                                        <Button padding={5} fontWeight={500} colorScheme='cruxia' variant={'solid'}
                                             onClick={handleSaveWidget}>
                                             Save</Button>
                                     </Stack>

@@ -1,6 +1,6 @@
 import Chart, { Props } from 'react-apexcharts'
 import { ChartProps } from './chartsTypes';
-import { useWidgetTheme } from '../../contexts/widget/themeContext';
+import { useWidgetContext } from '../../contexts/widget/themeContext';
   
     
   export function BarChart<T extends 'bar'>({ 
@@ -10,11 +10,11 @@ import { useWidgetTheme } from '../../contexts/widget/themeContext';
     titleText="", 
     chartHeight='100%',
     // recordsCount,
-    barWidth,
+    barWidth='60%',
     chartData
  }: Partial<ChartProps<T>>) {
 
-    const { widgetTheme } = useWidgetTheme()
+    const { widgetTheme } = useWidgetContext()
     const chartConfig: Props = {
         type: "bar",
         height: chartHeight,
@@ -31,7 +31,7 @@ import { useWidgetTheme } from '../../contexts/widget/themeContext';
           dataLabels: {
             enabled: false,
           },
-          colors: ["#00aa00", "#ee0000", "#0000dd"],
+          colors: ["#ee3344", "#00aa00", "#0000dd"],
           plotOptions: {
             bar: {
               columnWidth: barWidth,
@@ -52,12 +52,19 @@ import { useWidgetTheme } from '../../contexts/widget/themeContext';
                 fontFamily: "inherit",
                 fontWeight: 400,
               },
+              rotate: -90
             },
             categories: [
               "Apr",
               "May",
-              "Jun"
-            ],
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sept",
+              "Oct",
+              "Nov",
+              "Dec",
+            ].slice(0, (chartData && chartData[0].data.length)),
           },
           yaxis: {
             labels: {

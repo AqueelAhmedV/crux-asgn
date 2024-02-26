@@ -16,6 +16,7 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@heroicons/react": "^2.1.1",
+    "@types/dom-view-transitions": "^1.0.4",
     "apexcharts": "^3.46.0",
     "framer-motion": "^11.0.5",
     "react": "^18.2.0",

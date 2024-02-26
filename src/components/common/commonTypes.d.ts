@@ -7,7 +7,9 @@ interface DropdownOption<T> {
 }
 
 interface DropdownTriggerProps extends Attributes {
-    options: Array<DropdownOption<any>>
+    options: Array<DropdownOption<any>>,
+    onClose: () => void;
+    onOpen: () => void;
 }
 interface DropdownProps<T> extends PropsWithChildren {
     value: T;

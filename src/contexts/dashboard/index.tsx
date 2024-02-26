@@ -1,5 +1,6 @@
 import React, { type PropsWithChildren, createContext, useContext, useState } from 'react';
 import { WidgetConfig } from '../../components/widget/widgetsTypes';
+import { tryViewTransition } from '../../utils/dom';
 
 
 
@@ -8,19 +9,8 @@ interface DashboardContextType {
   widgetsConfig: Record<WidgetConfig['widgetId'], WidgetConfig>
   addWidget: (widgetId: string, config: WidgetConfig) => void;
   removeWidget: (widgetId: string) => void;
-  defaultWidgetConfig: WidgetConfig
 }
 
-const defaultWidgetConfig: WidgetConfig = {
-  widgetId: Date.now().toString(),
-  theme: 'light',
-  topbarVariant: 'dropdown',
-  dataType: 'accounting',
-  type: 'chart',
-  chartType: 'line',
-  chartProps: { recordsCount: 4, chartWidth: '100%' },
-  dimension: 'smallSquare'
-}
 
 const startupWidgets: Record<WidgetConfig['widgetId'], WidgetConfig> = {
   '1234': {
@@ -106,22 +96,21 @@ const DashboardContext = createContext<DashboardContextType>({
   widgetsConfig: startupWidgets,
   addWidget: () => { },
   removeWidget: () => { },
-  defaultWidgetConfig
 });
 
 // Create the provider
 export const DashboardProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [widgetsConfig, setWidgetsConfig] = useState<DashboardContextType['widgetsConfig']>({});
+  const [widgetsConfig, setWidgetsConfig] = useState<DashboardContextType['widgetsConfig']>(startupWidgets);
 
   const addWidget = (widgetId: string, config: WidgetConfig) => {
-    setWidgetsConfig((prevConfig) => ({
+    tryViewTransition(setWidgetsConfig, (prevConfig) => ({
       ...prevConfig,
       [widgetId]: config,
-    }));
+    }))
   };
 
   const removeWidget = (widgetId: string) => {
-    setWidgetsConfig((prevConfig) => {
+    tryViewTransition(setWidgetsConfig, (prevConfig) => {
       const newConfig = { ...prevConfig };
       delete newConfig[widgetId];
       return newConfig;
@@ -130,7 +119,7 @@ export const DashboardProvider: React.FC<PropsWithChildren> = ({ children }) => 
 
 
   return (
-    <DashboardContext.Provider value={{ widgetsConfig, addWidget, removeWidget, defaultWidgetConfig }}>
+    <DashboardContext.Provider value={{ widgetsConfig, addWidget, removeWidget }}>
       {children}
     </DashboardContext.Provider>
   );

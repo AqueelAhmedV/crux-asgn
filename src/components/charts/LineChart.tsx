@@ -1,6 +1,6 @@
 import Chart, { type Props } from "react-apexcharts";
 import type { ChartProps } from "./chartsTypes";
-import { useWidgetTheme } from "../../contexts/widget/themeContext";
+import { useWidgetContext } from "../../contexts/widget/themeContext";
 export function LineChart<T extends 'line'>({ 
     showGrid=false, 
     showLegend=false, 
@@ -13,7 +13,7 @@ export function LineChart<T extends 'line'>({
     // bgColor
 }: Partial<ChartProps<T>>) {
 
-    const { widgetTheme } = useWidgetTheme()
+    const { widgetTheme } = useWidgetContext()
     const chartConfig: Props = {
         type: "line",
         // style: {
@@ -57,6 +57,7 @@ export function LineChart<T extends 'line'>({
                         fontFamily: "inherit",
                         fontWeight: 400,
                     },
+                    rotate: -90
                 },
                 categories: [
                     "Apr",
@@ -102,7 +103,7 @@ export function LineChart<T extends 'line'>({
                 opacity: 0.8,
             },
             tooltip: {
-                theme: "dark",
+                theme: "light",
             },
             legend: {
                 show: showLegend

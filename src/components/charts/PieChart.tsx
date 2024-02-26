@@ -4,7 +4,7 @@ import { ChartProps } from "./chartsTypes";
 // import { useWidgetTheme } from "../../contexts/widget/themeContext";
 
 
-export function PieChart<T extends 'pie'>({ showLegend, showToolbar, titleText, chartDiameter=240, chartData }: Partial<ChartProps<T>>) {
+export function PieChart<T extends 'pie'>({ showLegend, showToolbar, titleText, chartDiameter='100%', chartData }: Partial<ChartProps<T>>) {
     // const { widgetTheme } = useWidgetTheme()
     const chartConfig: Props = {
         type: "pie",
@@ -26,7 +26,7 @@ export function PieChart<T extends 'pie'>({ showLegend, showToolbar, titleText, 
             dataLabels: {
                 enabled: false,
             },
-            colors: ["#00ee00", "#ff8f00", "#00897b", "#1e88e5", "#d81b60"],
+            colors: ["#00ee00", "#ff8f00", "#00897b", "#1e88e5", "#d81b60", "#f41"],
             legend: {
                 show: showLegend,
             },

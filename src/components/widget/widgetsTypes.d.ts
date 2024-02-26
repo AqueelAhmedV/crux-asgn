@@ -28,7 +28,7 @@ type WidgetBaseProps = {
 
 type WidgetContainerProps = PropsWithChildren & {
     dimension: WidgetDimension,
-    theme: WidgetTheme
+    widgetConfig: WidgetConfig
 } 
 
 interface WidgetTopbarProps {

@@ -1,12 +1,12 @@
 import { Tab, TabList, Tabs } from "@chakra-ui/react";
-import { useWidgetTheme } from "../../contexts/widget/themeContext";
+import { useWidgetContext } from "../../contexts/widget/themeContext";
 import { TabSwitchProps } from "./commonTypes";
 
 
 export function TabSwitch<T>({ setActiveTab, options }: TabSwitchProps<T>) {
-    const { widgetTheme } = useWidgetTheme()
+    const { widgetTheme } = useWidgetContext()
     return (
-        <Tabs height={'100%'} className="">
+        <Tabs variant='' height={'100%'} className="">
             <TabList height={'100%'} borderBottomWidth={'1px'}  className="">
                 {options.slice(1).map(({ label, value }) => (
                 <Tab

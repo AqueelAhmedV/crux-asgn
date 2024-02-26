@@ -1,6 +1,7 @@
-import { Button, CloseButton, IconButton, useDisclosure } from "@chakra-ui/react";
+import { Button, IconButton, useDisclosure } from "@chakra-ui/react";
 import { Cog6ToothIcon, HomeIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { CreateWidgetModal } from "../modal/Modal";
+import { CloseIcon } from "@chakra-ui/icons";
 
 
 export function Navbar() {
@@ -13,7 +14,7 @@ export function Navbar() {
                 <Button fontWeight={500} color="gray" rounded={'lg'} colorScheme="gray" variant={'outline'}>
                     Overview</Button>
                 <Button fontWeight={500} rounded={'lg'} variant={'outline'} colorScheme="cruxia" 
-                rightIcon={<CloseButton colorScheme="cruxia" variant={'link'}/>}>
+                rightIcon={<CloseIcon ml={1} h={3} w={3}/>}>
                     Customers</Button>
                 <Button fontWeight={500} color="gray" rounded={'lg'} colorScheme="gray" variant={'outline'}>
                     Settings</Button>

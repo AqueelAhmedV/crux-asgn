@@ -70,30 +70,30 @@ export const data = {
 
 export const summary = {
   accounting: {
-    text: "The sales report indicates a diverse range of product performance. Product A leads the pack with sales reaching 150,000 units, closely followed by Product B at 120,000 units. Product C maintains a solid position with 100,000 units sold. Additionally, Product D, Product E, and Product F contribute significantly to the overall sales, with 90,000, 80,000, and 70,000 units sold, respectively.",
+    text: "The accounting report indicates a diverse range of product performance. Product A leads the pack with sales reaching 150,000 units, closely followed by Product B at 120,000 units. Product C maintains a solid position with 100,000 units sold. Additionally, Product D, Product E, and Product F contribute significantly to the overall sales, with 90,000, 80,000, and 70,000 units sold, respectively.",
     highlighted: [   // 150,000
-      {start: 112, end: 119},
-      {start: 153, end: 160},
-      {start: 203, end: 210},
-      {start: 256, end: 265}
+      { start: 116, end: 124 },
+      { start: 157, end: 165 },
+      { start: 207, end: 215 },
+      { start: 260, end: 270 }
     ]
   },
   sales: {
     text: "The sales report indicates a diverse range of product performance. Product A leads the pack with sales reaching 150,000 units, closely followed by Product B at 120,000 units. Product C maintains a solid position with 100,000 units sold. Additionally, Product D, Product E, and Product F contribute significantly to the overall sales, with 90,000, 80,000, and 70,000 units sold, respectively.",
     highlighted: [   // 150,000
-      {start: 112, end: 119},
-      {start: 153, end: 160},
-      {start: 203, end: 210},
-      {start: 256, end: 265}
+      { start: 112, end: 119 },
+      { start: 153, end: 160 },
+      { start: 203, end: 210 },
+      { start: 256, end: 265 }
     ]
   },
   marketing: {
-    text: "The sales report indicates a diverse range of product performance. Product A leads the pack with sales reaching 150,000 units, closely followed by Product B at 120,000 units. Product C maintains a solid position with 100,000 units sold. Additionally, Product D, Product E, and Product F contribute significantly to the overall sales, with 90,000, 80,000, and 70,000 units sold, respectively.",
+    text: "The marketing report indicates a diverse range of product performance. Product A leads the pack with sales reaching 150,000 units, closely followed by Product B at 120,000 units. Product C maintains a solid position with 100,000 units sold. Additionally, Product D, Product E, and Product F contribute significantly to the overall sales, with 90,000, 80,000, and 70,000 units sold, respectively.",
     highlighted: [   // 150,000
-      {start: 112, end: 119},
-      {start: 153, end: 160},
-      {start: 203, end: 210},
-      {start: 256, end: 265}
+      { start: 116, end: 123 },
+      { start: 157, end: 164 },
+      { start: 207, end: 214 },
+      { start: 260, end: 269 }
     ]
   }
 }

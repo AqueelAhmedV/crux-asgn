@@ -1,12 +1,12 @@
 import { Text } from "@chakra-ui/react";
 import { useMemo } from "react";
-import { useWidgetTheme } from "../../contexts/widget/themeContext";
+import { useWidgetContext } from "../../contexts/widget/themeContext";
 import type { SummaryProps, } from "./summaryTypes";
 
 
 export function Summary({ text, highlights }: SummaryProps) {
 
-    const { widgetTheme } = useWidgetTheme()
+    const { widgetTheme } = useWidgetContext()
 
     const renderedText = useMemo(() => {
         if (!highlights || !text) return '';
@@ -24,7 +24,6 @@ export function Summary({ text, highlights }: SummaryProps) {
 
     return (
         <div className="max-h-full">
-        {/* <button onClick={() => setReload(Date.now())}>click</button> */}
         <Text
         sx={{
             b: {

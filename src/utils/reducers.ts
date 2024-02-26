@@ -12,10 +12,22 @@ const SET_CHART_TYPE = 'SET_CHART_TYPE';
 const SET_THEME = 'SET_THEME';
 const SET_TOPBAR_VARIANT = 'SET_TOPBAR_VARIANT';
 const SET_CHART_PROPS = 'SET_CHART_PROPS';
+const SET_ID = 'SET_ID';
 
-// Define the initial state
-const defaultWidgetConfig: WidgetConfig = {
-    widgetId: Date.now().toString(),
+type WidgetConfigAction = {
+    type: typeof SET_DIMENSION 
+        | typeof SET_TYPE 
+        | typeof SET_CHART_TYPE 
+        | typeof SET_CHART_PROPS 
+        | typeof SET_DATA_TYPE 
+        | typeof SET_THEME 
+        | typeof SET_TOPBAR_VARIANT
+        | typeof SET_ID,
+    payload: any//WidgetConfig[keyof WidgetConfig]
+}
+
+export const defaultWidgetConfig: WidgetConfig = {
+    widgetId: '',
     theme: 'light',
     topbarVariant: 'dropdown',
     dataType: 'accounting',
@@ -25,21 +37,11 @@ const defaultWidgetConfig: WidgetConfig = {
     dimension: 'smallSquare'
   }
 
-
-type WidgetConfigAction = {
-    type: typeof SET_DIMENSION 
-        | typeof SET_TYPE 
-        | typeof SET_CHART_TYPE 
-        | typeof SET_CHART_PROPS 
-        | typeof SET_DATA_TYPE 
-        | typeof SET_THEME 
-        | typeof SET_TOPBAR_VARIANT,
-    payload: any//WidgetConfig[keyof WidgetConfig]
-}
-
 // Define the reducer function
 const reducer: Reducer<WidgetConfig, WidgetConfigAction> = (state, action) => {
   switch (action.type) {
+    case SET_ID:
+        return { ...state, widgetId: action.payload }
     case SET_DIMENSION:
       return { ...state, dimension: action.payload };
     case SET_TYPE:
@@ -63,6 +65,7 @@ const reducer: Reducer<WidgetConfig, WidgetConfigAction> = (state, action) => {
 const useWidgetConfig = (initialStateOverride = defaultWidgetConfig) => {
   const [widgetConfig, dispatch] = useReducer(reducer, initialStateOverride);
     // Define action creators
+  const setWidgetId = (widgetId: string) => dispatch({ type: SET_ID, payload: widgetId })
   const setDimension = (dimension: WidgetDimension) => dispatch({ type: SET_DIMENSION, payload: dimension });
   const setWidgetType = (type: WidgetType ) => dispatch({ type: SET_TYPE, payload: type });
   const setDataType = (dataType: DataType) => dispatch({ type: SET_DATA_TYPE, payload: dataType });
@@ -72,7 +75,7 @@ const useWidgetConfig = (initialStateOverride = defaultWidgetConfig) => {
     dispatch({ type: SET_TOPBAR_VARIANT, payload: topbarVariant });
   const setChartProps = (chartProps: Partial<ChartProps<ChartType>>) => dispatch({ type: SET_CHART_PROPS, payload: chartProps });
 
-  return { widgetConfig, setDimension, setWidgetType, setDataType, setChartType, setTheme, setTopbarVariant, setChartProps };
+  return { widgetConfig, setWidgetId, setDimension, setWidgetType, setDataType, setChartType, setTheme, setTopbarVariant, setChartProps, defaultWidgetConfig };
 };
 
 export default useWidgetConfig;
