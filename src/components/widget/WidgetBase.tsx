@@ -1,9 +1,9 @@
 import type { DaysOptions, WidgetBaseProps } from './widgetsTypes'
-import { WidgetTopbar } from './WidgetTopbar.tsx'
+import { WidgetTopbar } from './WidgetTopbar'
 import { useState } from 'react'
 import { WidgetThemeProvider } from '../../contexts/widget/themeContext'
-import { WidgetContainer } from './WidgetContainer.tsx';
-import { WidgetContent } from './WidgetContent.tsx';
+import { WidgetContainer } from './WidgetContainer';
+import { WidgetContent } from './WidgetContent';
 
 
 export function WidgetBase({ widgetConfig }: WidgetBaseProps) {
