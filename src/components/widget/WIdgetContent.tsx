@@ -1,5 +1,5 @@
 import { Chart } from "../charts/Chart";
-import { ChartData, ChartProps, ChartType } from "../charts/chartsTypes";
+import type { ChartData, ChartProps, ChartType } from "../charts/chartsTypes";
 import { Summary } from "../summary/Summary";
 import type { WidgetContentProps, WidgetType } from "./widgetsTypes";
 import { DataTable } from "../table/Table";
