@@ -88,6 +88,19 @@ const startupWidgets: Record<WidgetConfig['widgetId'], WidgetConfig> = {
       chartWidth: '100%',
       recordsCount: 4
     }
+  },
+  '3300': {
+    widgetId: '3300',
+    type: 'chart',
+    chartType: 'bar',
+    chartProps: {
+      chartWidth: '100%',
+      recordsCount: 4
+    },
+    topbarVariant: 'dropdown',
+    dataType: 'marketing',
+    theme: 'light',
+    dimension: 'smallSquare'
   }
 }
 

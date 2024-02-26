@@ -6,7 +6,6 @@ import { Data, DataType } from "../db/dataType"
 
 export const deserializer = {
     chart<T extends ChartType, K extends DataType>(chartType: T, data: Data, dataType: K, columns?: DataType[]): ChartData<T> | undefined {
-        console.log(data)
         let seriesLookup = {
             accounting: () => Object.values(data['accounting']),
             marketing: () => data['marketing']['campaigns'].map((o) => o.cost),

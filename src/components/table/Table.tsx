@@ -29,7 +29,7 @@ export function DataTable<T extends DataType>({ dataType, tableRows  }: DataTabl
         <tbody className='max-w-full'>
           {
             tableRows.map(({ label, value }) => (
-              <tr className='flex justify-around'>
+              <tr key={label} className='flex justify-around'>
                 <td className=" justify-self-start capitalize px-2 py-1 whitespace-nowrap overflow-hidden text-ellipsis">{label}</td>
                 <td className=" justify-self-start px-2 py-1 whitespace-nowrap overflow-hidden text-ellipsis">{value}</td>
               </tr>
