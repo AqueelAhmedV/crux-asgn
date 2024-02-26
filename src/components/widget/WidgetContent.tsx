@@ -53,7 +53,7 @@ export function WidgetContent<T extends WidgetType, K extends ChartType>({ type,
 
     return (
     <div className=' p-1 flex justify-center items-center' >
-        <Suspense fallback={<Skeleton fitContent />}>
+        <Suspense fallback={<Skeleton animation={'linear'} width="100%" height={'200px'} />}>
             <LzMzContent/>
         </Suspense>
     </div>)

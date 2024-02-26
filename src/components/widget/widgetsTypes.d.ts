@@ -1,7 +1,7 @@
 import { type PropsWithChildren, type SetStateAction } from "react";
-import { ChartProps, ChartType } from "../charts/chartsTypes";
-import { DataType } from "../../db/dataType";
-import { WidgetTheme } from "../../theme/widget";
+import type { ChartProps, ChartType } from "../charts/chartsTypes";
+import type { DataType } from "../../db/dataType";
+import type { WidgetTheme } from "../../theme/widget";
 
 type TopbarVariant = 'dropdown' | 'tabs'
 
